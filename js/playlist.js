@@ -48,7 +48,7 @@ const musicCatalog = () => {
    */
     const removePlaylist = (playlistName) => {
       //By Jairo
-      playlists = playlists.filter(({name})=>name !== playlistName.name)
+      playlists = playlists.filter(({name})=>name !== playlistName)
     };
 
   /**
@@ -58,8 +58,9 @@ const musicCatalog = () => {
    * @throws {Error} If the playlist is not found.
    */
   const addSongToPlaylist = (playlistName, song) => {
-    //Jairo
-    
+    //By Jairo
+    const playListSelected = playlists.find(({name})=>name === playlistName)
+    playListSelected.songs = [...playListSelected.songs,song]    
   };
 
   /**
@@ -68,7 +69,11 @@ const musicCatalog = () => {
    * @param {string} title - The title of the song to remove.
    * @throws {Error} If the playlist or song is not found.
    */
-  const removeSongFromPlaylist = (playlistName, title) => {};
+  const removeSongFromPlaylist = (playlistName, title) => {
+    //By Jairo
+    const playListSelected = playlists.find(({name})=>name === playlistName)
+    playListSelected.songs = playListSelected.songs.filter(({title})=> title!==title)
+  };
 
   /**
    * Marks a song as a favorite or removes the favorite status.
