@@ -88,8 +88,11 @@ const initEventListeners = () => {
       const form = event.target;
       const formData = new FormData(form);
       const songData = Object.fromEntries(formData);
+      console.log(form.dataset);
+      console.log(songData);
       musicCatalog.addSongToPlaylist(form.dataset.id, songData);
       const updatedPlaylists = musicCatalog.getAllPlaylists();
+      console.log(updatedPlaylists)
       renderPlaylists(updatedPlaylists);
     }
   });

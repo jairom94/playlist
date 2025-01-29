@@ -27,9 +27,7 @@ const musicCatalog = () => {
    * Adds a new playlist to the catalog.
    * @param {string} playlistName - The name of the new playlist.
    */
-  const createPlaylist = (playlistName) => {
-    //By Jairo
-
+  const createPlaylist = (playlistName) => {    
     playlists = [...playlists,{
       name:playlistName,
       songs:[]
@@ -50,8 +48,7 @@ const musicCatalog = () => {
    * Removes a playlist from the catalog.
    * @param {string} playlistName - The name of the playlist to remove.
    */
-    const removePlaylist = (playlistName) => {
-      //By Jairo
+    const removePlaylist = (playlistName) => {      
       playlists = playlists.filter(({name})=>name !== playlistName)
     };
 
@@ -62,13 +59,20 @@ const musicCatalog = () => {
    * @throws {Error} If the playlist is not found.
    */
   const addSongToPlaylist = (playlistName, song) => {
-    //By Jairo
     const playListSelected = playlists.find(({name})=>name === playlistName)
     if (playListSelected){
       playlists = playlists.map((playlist)=>{
         if(playlist.name === playlistName){
-          playlist.songs = [...playlist.songs,song]
+          const songs = [
+            ...playlist.songs,
+            {...song,favorite:false}
+          ]
+          return {
+            ...playlist,
+            songs
+          }
         }
+      return {...playlist}
       });
     }    
   };
@@ -79,14 +83,18 @@ const musicCatalog = () => {
    * @param {string} title - The title of the song to remove.
    * @throws {Error} If the playlist or song is not found.
    */
-  const removeSongFromPlaylist = (playlistName, title) => {
-    //By Jairo
+  const removeSongFromPlaylist = (playlistName, title) => {    
     const playListFound = playlists.find(({name})=>name === playlistName)
     if(playListFound){
       playlists = playlists.map((playlist)=>{
         if(playlist.name === playlistName){
-          playlist.songs = playlist.songs.filter((song)=>song.title!==title);
+          const songs = playlist.songs.filter((song)=>song.title!==title);
+          return {
+            ...playlist,
+            songs
+          }
         }
+        return {...playlist}
       })
     }
   };
@@ -96,7 +104,30 @@ const musicCatalog = () => {
    * @param {string} playlistName - The name of the playlist containing the song.
    * @param {string} title - The title of the song to mark as a favorite.
    */
-  const favoriteSong = (playlistName, title) => {};
+  const favoriteSong = (playlistName, title) => {
+    const playlistFounded = playlists.find(({name})=>name===playlistName)
+    if(playlistFounded){
+      playlists = playlists.map((playlist)=>{
+        if(playlist.name === playlistName){
+          const songs = playlist.songs.map((song)=>{
+            if(song.title === title){
+              const favorite = !song.favorite
+              return {
+                ...song,
+                favorite
+              }
+            }
+            return {...song}
+          });
+          return {
+            ...playlist,
+            songs
+          }
+        }
+        return {...playlist}        
+      });
+    }
+  };
 
   /**
    * Sorts songs in a specific playlist by a given criterion (title, artist, or duration).
