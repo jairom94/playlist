@@ -108,7 +108,7 @@ const musicCatalog = () => {
     const playlistFounded = playlists.find(({name})=>name===playlistName)
     if(playlistFounded){
       playlists = playlists.map((playlist)=>{
-        if(playlist.name === playlistName){
+        if(playlist.name === playlistName){          
           const songs = playlist.songs.map((song)=>{
             if(song.title === title){
               const favorite = !song.favorite
@@ -136,7 +136,24 @@ const musicCatalog = () => {
    * @returns {Song[]} The list of sorted songs.
    * @throws {Error} If the playlist is not found or the criterion is invalid.
    */
-  const sortSongs = (playlistName, criterion) => {};
+  const sortSongs = (playlistName, criterion) => {
+    playlists = playlists.map(playlist=>{
+      if(playlist.name === playlistName){
+        const songs = structuredClone(playlist.songs)
+        if(criterion === 'duration'){
+          songs.sort((sA,sB)=>sA.duration-sB.duration)          
+        }
+        else if(criterion === 'title' || criterion === 'artist'){
+          songs.sort((sA,sB)=>sA[criterion].localeCompare(sB[criterion],'es',{ sensitivity: 'base' }));          
+        }        
+        return {
+          ...playlist,
+          songs
+        }                
+      }      
+      return {...playlist}
+    })
+  };
 
   return { createPlaylist, addSongToPlaylist, removeSongFromPlaylist, sortSongs, getAllPlaylists, removePlaylist, favoriteSong };
 };
