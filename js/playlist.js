@@ -81,8 +81,14 @@ const musicCatalog = () => {
    */
   const removeSongFromPlaylist = (playlistName, title) => {
     //By Jairo
-    const playListSelected = playlists.find(({name})=>name === playlistName)
-    playListSelected.songs = playListSelected.songs.filter(({title})=> title!==title)
+    const playListFound = playlists.find(({name})=>name === playlistName)
+    if(playListFound){
+      playlists = playlists.map((playlist)=>{
+        if(playlist.name === playlistName){
+          playlist.songs = playlist.songs.filter((song)=>song.title!==title);
+        }
+      })
+    }
   };
 
   /**
