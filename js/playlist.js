@@ -39,8 +39,7 @@ const musicCatalog = () => {
    * Gets all playlists in the catalog.
    * @returns {Playlist[]} The list of all playlists.
    */
-  const getAllPlaylists = () => {
-    //By Jairo
+  const getAllPlaylists = () => {    
     return playlists
   };
 
@@ -49,7 +48,9 @@ const musicCatalog = () => {
    * @param {string} playlistName - The name of the playlist to remove.
    */
     const removePlaylist = (playlistName) => {      
-      playlists = playlists.filter(({name})=>name !== playlistName)
+      playlists = playlists
+      .filter(({name})=>name !== playlistName)
+      .map((playlist)=>({...playlist}))
     };
 
   /**
