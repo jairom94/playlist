@@ -47,7 +47,7 @@ const renderPlayList = (playlist) => {
         <button class="criterion" data-id="${playlist.name}" data-criterion="duration">Sort by duration</button>
         <button class="criterion" data-id="${playlist.name}" data-criterion="title">Sort by title</button>
         <button class="criterion" data-id="${playlist.name}" data-criterion="artist">Sort by artist</button>
-      </div>
+      </div>            
       ${playlist.songs.map(song => renderSong(playlist.name, song)).join('')}
       <button class="remove-playlist" data-id="${playlist.name}">Remove playlist</button>
       <hr>
@@ -104,9 +104,10 @@ const renderPlaylists = (playlists) => {
 playlistForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const formData = new FormData(playlistForm); // FormData es un objeto que nos permite obtener los datos de un formulario
-  const cartData = Object.fromEntries(formData); // Object.fromEntries nos permite convertir un objeto iterable en un objeto. { name: 'playlist' }
+  const cartData = Object.fromEntries(formData); // Object.fromEntries nos permite convertir un objeto iterable en un objeto. { name: 'playlist' }  
   musicCatalog.createPlaylist(cartData.name);
   const playlists = musicCatalog.getAllPlaylists();
+  // console.log(playlists)
   renderPlaylists(playlists);
 });
 

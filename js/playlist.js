@@ -29,7 +29,11 @@ const musicCatalog = () => {
    */
   const createPlaylist = (playlistName) => {
     //By Jairo
-    playlists = [...playlists,playlistName]
+
+    playlists = [...playlists,{
+      name:playlistName,
+      songs:[]
+    }]
 
   };
 
@@ -60,7 +64,13 @@ const musicCatalog = () => {
   const addSongToPlaylist = (playlistName, song) => {
     //By Jairo
     const playListSelected = playlists.find(({name})=>name === playlistName)
-    playListSelected.songs = [...playListSelected.songs,song]    
+    if (playListSelected){
+      playlists = playlists.map((playlist)=>{
+        if(playlist.name === playlistName){
+          playlist.songs = [...playlist.songs,song]
+        }
+      });
+    }    
   };
 
   /**
